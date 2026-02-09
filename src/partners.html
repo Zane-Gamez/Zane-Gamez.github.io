@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Partners</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         :root {
-            --bg: #0a0a12;
-            --neon-pink: #ff00ff;
-            --neon-blue: #00f7ff;
-            --card-bg: #111122;
+            --bg: #000000;
+            --accent: #9d4edd;
+            --accent-glow: #c77dff;
+            --card-bg: #0a0a0a;
+            --border: #240046;
         }
 
         * {
@@ -20,7 +22,7 @@
         }
 
         body {
-            background: radial-gradient(circle at top, #1a102b, var(--bg));
+            background: var(--bg);
             background-attachment: fixed;
             color: white;
             min-height: 100vh;
@@ -36,95 +38,160 @@
         }
 
         header h1 {
-            font-size: 3rem;
+            font-size: 5rem;
             text-transform: uppercase;
             color: #fff;
-            text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink), 0 0 40px var(--neon-pink);
-            letter-spacing: 4px;
+            text-shadow: 0 0 25px var(--accent);
+            letter-spacing: 10px;
+            font-weight: 900;
+            margin-bottom: 10px;
         }
 
         header p {
-            color: var(--neon-blue);
-            text-shadow: 0 0 5px var(--neon-blue);
+            color: white;
             margin-top: 10px;
             letter-spacing: 1px;
         }
 
         .partners-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
             width: 100%;
-            max-width: 1100px;
+            max-width: 1200px;
         }
-        
+
         .partner-card {
-            background: var(--card-bg);
-            border: 2px solid rgba(0, 247, 255, 0.1);
-            border-radius: 15px;
-            padding: 30px;
+            background: rgba(15, 15, 15, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 0;
             text-align: center;
             text-decoration: none;
             color: white;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
         }
 
         .partner-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--neon-blue);
-            box-shadow: 0 0 20px var(--neon-blue), inset 0 0 10px var(--neon-blue);
+            transform: translateY(-12px) scale(1.03);
+            border-color: var(--accent);
+            box-shadow: 0 12px 40px rgba(157, 78, 237, 0.4);
+            z-index: 2;
         }
 
-        .partner-logo {
-            width: 80px;
-            height: 80px;
-            background: #000;
-            border-radius: 50%;
-            margin-bottom: 15px;
+        .partner-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(157, 78, 237, 0.1), transparent);
+            transition: 0.6s;
+        }
+
+        .partner-card:hover::after {
+            left: 100%;
+        }
+
+        .partner-thumb-wrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #1a1a1a;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .partner-img {
+            width: 100%;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
-            border: 1px solid var(--neon-pink);
-            box-shadow: 0 0 10px var(--neon-pink);
+            font-size: 3rem;
+            background: #222;
+        }
+
+        .partner-duration {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            font-size: 11px;
+            padding: 2px 4px;
+            border-radius: 2px;
+            font-weight: bold;
         }
 
         .partner-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 8px;
-            letter-spacing: 1px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 4px;
+            color: #fff;
+            text-align: left;
+            width: 100%;
+            padding: 0 15px;
+            /* Added padding for text content */
         }
 
         .partner-card p {
-            font-size: 0.9rem;
-            color: #aaa;
+            font-size: 12px;
+            color: #888;
             line-height: 1.4;
+            text-align: left;
+            width: 100%;
+            padding: 0 15px;
+            /* Added padding for text content */
+        }
+
+        .partner-meta {
+            font-size: 12px;
+            color: #888;
+            margin-top: 4px;
+            text-align: left;
+            width: 100%;
+            padding: 0 15px 15px;
+            /* Added padding for text content */
+        }
+
+        .verified-icon {
+            color: var(--accent);
         }
 
         .back-btn {
             margin-top: 50px;
-            padding: 10px 25px;
+            padding: 12px 30px;
             background: transparent;
-            border: 1px solid var(--neon-pink);
-            color: var(--neon-pink);
+            border: 1px solid var(--accent);
+            color: var(--accent);
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 6px;
             transition: 0.3s;
             text-transform: uppercase;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(157, 78, 237, 0.2);
         }
 
         .back-btn:hover {
-            background: var(--neon-pink);
+            background: var(--accent);
             color: white;
-            box-shadow: 0 0 20px var(--neon-pink);
+            box-shadow: 0 0 25px var(--accent);
+            transform: translateY(-2px);
         }
     </style>
 </head>
+
 <body>
 
     <header>
@@ -133,17 +200,38 @@
     </header>
 
     <div class="partners-container">
-        
+
         <a href="https://bloxcraft-ubg.pages.dev" class="partner-card" target="_blank">
-            <div class="partner-logo">🚀</div>
+            <div class="partner-thumb-wrap">
+                <div class="partner-img">🚀</div>
+
+            </div>
             <h3>Bloxcraft UBG</h3>
-            <p>The 2nd owner's unblocked game site! It has hundreds and thousands of games and has more games than this site to play witH!</p>
+            <p>The 2nd owner's unblocked game site! It has hundreds and thousands of games...</p>
+
         </a>
 
-<p>Want to partner? DM one of the owners on Discord!</p>
+        <a href="https://zyra-hub.netlify.app/" class="partner-card" target="_blank">
+            <div class="partner-thumb-wrap">
+                <div class="partner-img">⚡</div>
+
+            </div>
+            <h3>Zyra Hub</h3>
+            <p>The coolest site eva!</p>
+
+        </a>
+        <a href="https://elite-gamez.github.io/" class="partner-card" target="_blank">
+            <div class="partner-thumb-wrap">
+
+            </div>
+            <h3>Elite Gamez</h3>
+            <p>best friends server!</p>
+
+        </a>
     </div>
 
-
+    <p>Want to partner? DM one of the owners on Discord! </p>
 
 </body>
+
 </html>
