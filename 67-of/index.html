@@ -10,15 +10,20 @@
     <script src="/sail/scram/scramjet.all.js"></script>
 
     <style>
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+        }
 
         :root {
-            --bg: #000;
+            --bg: #000000;
             --toolbar: #0d0d0d;
+            --toolbar2: #111111;
             --tab: #0f0f0f;
             --tab-hover: #1b1b1b;
             --border: #1f1f1f;
-            --text: #fff;
+            --text: #ffffff;
+            --muted: #8a8a8a;
+            --active: #1c1c1c;
         }
 
         body {
@@ -45,6 +50,7 @@
         .tab {
             height: 34px;
             min-width: 190px;
+            max-width: 220px;
             background: var(--tab);
             border-radius: 10px 10px 0 0;
             display: flex;
@@ -52,9 +58,18 @@
             gap: 10px;
             padding: 0 12px;
             cursor: pointer;
+            color: #cfcfcf;
+            user-select: none;
+            transition: .15s;
         }
 
-        .tab.active { background: #111; }
+        .tab:hover {
+            background: var(--tab-hover);
+        }
+
+        .tab.active {
+            background: #111111;
+        }
 
         .tab-title {
             flex: 1;
@@ -70,10 +85,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
         }
-
-        .tab-close:hover { background: rgba(255,255,255,0.1); }
 
         .navbar {
             height: 52px;
@@ -83,15 +95,6 @@
             align-items: center;
             gap: 8px;
             padding: 0 12px;
-        }
-
-        .nav-btn {
-            width: 32px;
-            height: 32px;
-            border: none;
-            background: transparent;
-            border-radius: 50%;
-            cursor: pointer;
         }
 
         .address-bar {
@@ -128,7 +131,9 @@
             display: none;
         }
 
-        iframe.active { display: block; }
+        iframe.active {
+            display: block;
+        }
     </style>
 </head>
 
@@ -154,33 +159,47 @@
         let tabs = [];
         let activeTabId = null;
 
-        function decodeProxiedUrl(url) {
-            if (!url) return "";
+        function decodeProxiedUrl(u) {
+            if (!u) return "";
 
             try {
-                if (url.includes("/sail/go/")) {
-                    let raw = url.split("/sail/go/")[1] || "";
+                if (u.includes("/sail/go/")) {
+                    let part = u.split("/sail/go/")[1] || "";
 
-                    for (let i = 0; i < 3; i++) {
-                        try {
-                            const next = decodeURIComponent(raw);
-                            if (next === raw) break;
-                            raw = next;
-                        } catch {
-                            break;
-                        }
+                    while (part.includes("%")) {
+                        const next = decodeURIComponent(part);
+                        if (next === part) break;
+                        part = next;
                     }
 
-                    return raw;
+                    return part;
                 }
 
-                return url;
+                return u;
             } catch {
-                return url;
+                return u;
             }
         }
 
-        function addTab(url = "https://math-hub.pages.dev/newtab/") {
+        function getRealFrameUrl(frame) {
+            try {
+                let url = "";
+
+                try {
+                    url = frame.contentWindow.location.href;
+                } catch {
+                    url = frame.src;
+                }
+
+                if (!url) return "";
+
+                return decodeProxiedUrl(url);
+            } catch {
+                return frame.src;
+            }
+        }
+
+        function addTab(url = "bloxcraft://newtab") {
             const id = "tab-" + crypto.randomUUID();
 
             const tab = { id, url };
@@ -202,8 +221,8 @@
 
             const frame = document.createElement("iframe");
             frame.id = "frame-" + id;
-
             frame.src = url;
+
             viewportContainer.appendChild(frame);
 
             switchTab(id);
@@ -229,17 +248,7 @@
             const frame = document.getElementById("frame-" + activeTabId);
             if (!frame) return;
 
-            let liveUrl = "";
-
-            try {
-                liveUrl =
-                    frame.contentWindow.location.href ||
-                    frame.src;
-            } catch {
-                liveUrl = frame.src;
-            }
-
-            bar.value = decodeProxiedUrl(liveUrl);
+            bar.value = getRealFrameUrl(frame);
         }
 
         function nav() {
