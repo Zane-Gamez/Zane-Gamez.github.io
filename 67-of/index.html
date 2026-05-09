@@ -2,9 +2,9 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zane Gamez</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BloxProxy</title>
 
     <script src="/sail/baremux/index.js"></script>
     <script src="/sail/scram/scramjet.all.js"></script>
@@ -14,184 +14,231 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --bg: #0f1724;
+            --toolbar: #17212f;
+            --toolbar-light: #1e2b3d;
+            --tab: #202d40;
+            --tab-hover: #2a3a52;
+            --active: #4c8dff;
+            --border: #31445f;
+            --text: #ffffff;
+            --muted: #9fb3ca;
+            --input: #101826;
+        }
+
         body {
             margin: 0;
-            background: #000;
-            color: #fff;
-            font-family: 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Arial, Helvetica, sans-serif;
             height: 100vh;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
+        }
+
+        .topbar {
+            background: linear-gradient(to bottom, #1d2b3d, #162232);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
         }
 
         .tab-bar {
             display: flex;
-            align-items: center;
-            background: #0a0a0a;
-            padding: 6px 10px 0;
-            border-bottom: 1px solid #240046;
+            align-items: flex-end;
             gap: 6px;
+            padding: 8px 10px 0;
             overflow-x: auto;
             scrollbar-width: none;
-            min-height: 48px;
+            min-height: 42px;
         }
 
         .tab-bar::-webkit-scrollbar {
             display: none;
         }
 
-        .back-home {
-            color: #666;
+        .chrome-btn {
+            background: var(--toolbar-light);
+            border: 1px solid var(--border);
+            color: white;
+            height: 34px;
+            min-width: 34px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: .18s;
+            font-size: 15px;
+        }
+
+        .chrome-btn:hover {
+            background: var(--tab-hover);
+        }
+
+        .home-btn {
             text-decoration: none;
-            font-size: 12px;
-            font-weight: 600;
-            padding: 8px 10px;
-            border-radius: 6px;
-            transition: .2s;
+            color: var(--muted);
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 14px;
+            height: 34px;
+            border-radius: 10px;
+            background: var(--toolbar-light);
+            border: 1px solid var(--border);
+            transition: .18s;
             white-space: nowrap;
         }
 
-        .back-home:hover {
-            color: #fff;
-            background: #111;
+        .home-btn:hover {
+            background: var(--tab-hover);
+            color: white;
         }
 
         .tab {
+            height: 38px;
+            min-width: 170px;
+            max-width: 230px;
+            border-radius: 12px 12px 0 0;
+            background: var(--tab);
+            border: 1px solid transparent;
+            border-bottom: none;
             display: flex;
             align-items: center;
-            background: #111;
-            padding: 8px 14px;
-            border-radius: 10px 10px 0 0;
-            font-size: 13px;
+            padding: 0 12px;
+            gap: 10px;
             cursor: pointer;
-            min-width: 130px;
-            max-width: 220px;
-            border: 1px solid #1f1f1f;
-            border-bottom: none;
-            transition: .2s;
-            position: relative;
-            color: #888;
+            transition: .18s;
             user-select: none;
+            position: relative;
+            color: var(--muted);
         }
 
         .tab:hover {
-            background: #161616;
-            color: #ddd;
+            background: var(--tab-hover);
+            color: white;
         }
 
         .tab.active {
-            background: #9d4edd;
-            color: #fff;
-            border-color: #9d4edd;
-            box-shadow: 0 -4px 18px rgba(157, 78, 237, .25);
+            background: linear-gradient(to bottom, #5c9dff, #4c8dff);
+            color: white;
+            box-shadow: 0 4px 18px rgba(76, 141, 255, .35);
         }
 
         .tab-title {
             flex: 1;
-            white-space: nowrap;
             overflow: hidden;
+            white-space: nowrap;
             text-overflow: ellipsis;
+            font-size: 13px;
+            font-weight: 500;
         }
 
         .tab-close {
-            margin-left: 10px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: .15s;
             font-size: 14px;
-            opacity: .55;
-            transition: .2s;
         }
 
         .tab-close:hover {
-            opacity: 1;
-            color: #ff5b5b;
-        }
-
-        .toolbar-btn {
-            background: rgba(157, 78, 237, .08);
-            border: 1px solid rgba(157, 78, 237, .25);
-            color: #9d4edd;
-            padding: 7px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-bottom: 6px;
-            font-weight: 700;
-            transition: .2s;
-            white-space: nowrap;
-        }
-
-        .toolbar-btn:hover {
-            background: #9d4edd;
-            color: #fff;
-            box-shadow: 0 0 12px rgba(157, 78, 237, .5);
+            background: rgba(255, 255, 255, .15);
+            color: #ff7d7d;
         }
 
         .spacer {
             flex: 1;
         }
 
-        .address-bar-container {
+        .nav-bar {
             display: flex;
+            align-items: center;
+            gap: 8px;
             padding: 10px;
-            background: #0a0a0a;
-            gap: 10px;
-            border-bottom: 1px solid #111;
+            background: var(--toolbar);
+        }
+
+        .nav-btn {
+            height: 38px;
+            min-width: 38px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--toolbar-light);
+            color: white;
+            cursor: pointer;
+            transition: .18s;
+            font-size: 15px;
+        }
+
+        .nav-btn:hover {
+            background: var(--tab-hover);
+        }
+
+        .address-wrap {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            background: var(--input);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0 14px;
+            height: 42px;
+        }
+
+        .address-wrap:focus-within {
+            border-color: var(--active);
+            box-shadow: 0 0 0 3px rgba(76, 141, 255, .15);
         }
 
         #bar {
             flex: 1;
-            background: #111;
-            border: 1px solid #222;
-            color: #fff;
-            padding: 10px 14px;
-            border-radius: 8px;
+            height: 100%;
+            background: transparent;
+            border: none;
+            color: white;
             outline: none;
-            transition: .2s;
             font-size: 14px;
         }
 
-        #bar:focus {
-            border-color: #9d4edd;
-            box-shadow: 0 0 10px rgba(157, 78, 237, .2);
-        }
-
-        .nav-btn {
-            background: #1b1b1b;
-            border: 1px solid #2a2a2a;
-            color: #fff;
-            padding: 0 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: .2s;
-            font-weight: 600;
-        }
-
-        .nav-btn:hover {
-            background: #292929;
+        #bar::placeholder {
+            color: #7d91a8;
         }
 
         .go-btn {
-            background: #9d4edd;
+            background: linear-gradient(to bottom, #5c9dff, #4c8dff);
             border: none;
+            color: white;
+            height: 38px;
+            padding: 0 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
         }
 
         .go-btn:hover {
-            background: #b05cff;
+            background: linear-gradient(to bottom, #72acff, #5a98ff);
         }
 
         #viewport-container {
             flex: 1;
             position: relative;
-            background: #000;
+            background: black;
         }
 
         iframe {
+            position: absolute;
+            inset: 0;
             width: 100%;
             height: 100%;
             border: none;
-            position: absolute;
-            inset: 0;
             display: none;
-            background: #000;
+            background: black;
         }
 
         iframe.active {
@@ -200,16 +247,15 @@
 
         .settings-panel {
             position: fixed;
-            top: 58px;
-            right: 12px;
-            width: 320px;
-            background: #0d0d0d;
-            border: 1px solid #232323;
-            border-radius: 14px;
-            padding: 16px;
+            top: 60px;
+            right: 14px;
+            width: 340px;
+            background: #162232;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 18px;
             z-index: 9999;
             display: none;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, .55);
         }
 
         .settings-panel.open {
@@ -217,98 +263,126 @@
         }
 
         .settings-title {
-            font-size: 18px;
+            font-size: 22px;
             font-weight: 700;
-            margin-bottom: 14px;
+            margin-bottom: 18px;
         }
 
         .settings-group {
-            margin-bottom: 14px;
+            margin-bottom: 16px;
         }
 
         .settings-label {
-            font-size: 13px;
-            color: #aaa;
-            margin-bottom: 6px;
             display: block;
+            font-size: 13px;
+            margin-bottom: 8px;
+            color: var(--muted);
         }
 
-        .settings-input,
-        .settings-select {
+        .settings-select,
+        .settings-input {
             width: 100%;
-            background: #111;
-            border: 1px solid #222;
-            color: #fff;
-            border-radius: 8px;
-            padding: 10px 12px;
+            background: #101826;
+            border: 1px solid var(--border);
+            color: white;
+            padding: 12px;
+            border-radius: 12px;
             outline: none;
+        }
+
+        #custom-ws-group {
+            display: none;
         }
 
         .settings-save {
             width: 100%;
-            background: #9d4edd;
+            height: 44px;
             border: none;
-            color: #fff;
-            padding: 11px;
-            border-radius: 8px;
-            cursor: pointer;
+            border-radius: 12px;
+            background: linear-gradient(to bottom, #5c9dff, #4c8dff);
+            color: white;
             font-weight: 700;
-            transition: .2s;
+            cursor: pointer;
         }
 
         .settings-save:hover {
-            background: #b05cff;
+            background: linear-gradient(to bottom, #72acff, #5a98ff);
         }
     </style>
 </head>
 
 <body>
 
-    <div class="tab-bar" id="tab-bar">
-        <a href="/porxy-selector" class="back-home">Select Proxy</a>
+    <div class="topbar">
 
-        <button class="toolbar-btn" onclick="addTab()">+</button>
+        <div class="tab-bar" id="tab-bar">
 
-        <div class="spacer"></div>
+            <a href="/porxy-selector" class="home-btn">
+                Select Proxy
+            </a>
 
-        <button class="toolbar-btn" onclick="toggleSettings()">Settings</button>
-    </div>
+            <button class="chrome-btn" onclick="addTab()">+</button>
 
-    <div class="address-bar-container">
-        <button class="nav-btn" onclick="goBack()">←</button>
-        <button class="nav-btn" onclick="goForward()">→</button>
+            <div class="spacer"></div>
 
-        <input type="text" id="bar" placeholder="Search or enter URL">
+            <button class="chrome-btn" onclick="toggleSettings()">⚙</button>
 
-        <button class="nav-btn go-btn" onclick="nav()">GO</button>
+        </div>
+
+        <div class="nav-bar">
+
+            <button class="nav-btn" onclick="goBack()">←</button>
+
+            <button class="nav-btn" onclick="goForward()">→</button>
+
+            <div class="address-wrap">
+                <input type="text" id="bar" placeholder="Search Google or type a URL">
+            </div>
+
+            <button class="go-btn" onclick="nav()">Go</button>
+
+        </div>
+
     </div>
 
     <div id="viewport-container"></div>
 
     <div class="settings-panel" id="settings-panel">
-        <div class="settings-title">Settings</div>
+
+        <div class="settings-title">
+            Settings
+        </div>
 
         <div class="settings-group">
-            <label class="settings-label">WebSocket Server</label>
+            <label class="settings-label">
+                Wisp WebSocket Server
+            </label>
 
             <select id="ws-select" class="settings-select">
-                <option value="default">Default Classroom</option>
-                <option value="wss://echo.websocket.events">Echo</option>
-                <option value="wss://ws.ifelse.io">IfElse</option>
+                <option value="default">wss://wisp.classroom.lat/</option>
+                <option value="wss://echo.websocket.events">wss://echo.websocket.events/</option>
+                <option value="wss://ws.ifelse.io">wss://ws.ifelse.io/</option>
                 <option value="custom">Custom</option>
             </select>
         </div>
 
-        <div class="settings-group">
-            <label class="settings-label">Custom WebSocket</label>
+        <div class="settings-group" id="custom-ws-group">
 
-            <input type="text" id="custom-ws" class="settings-input"
+            <label class="settings-label">
+                Custom Wisp Server
+            </label>
+
+            <input type="text"
+                id="custom-ws"
+                class="settings-input"
                 placeholder="wss://example.com/wisp/">
+
         </div>
 
         <button class="settings-save" onclick="saveSettings()">
             Save Settings
         </button>
+
     </div>
 
     <script>
@@ -316,13 +390,14 @@
         const bar = document.getElementById("bar");
         const viewportContainer = document.getElementById("viewport-container");
 
+        const wsSelect = document.getElementById("ws-select");
+        const customWsGroup = document.getElementById("custom-ws-group");
+        const customWsInput = document.getElementById("custom-ws");
+
         let tabs = [];
         let activeTabId = null;
 
-        const defaultWs =
-            location.protocol === "https:"
-                ? "wss://classroom.lat/"
-                : "ws://classroom.lat/";
+        const defaultWs = "wss://wisp.classroom.lat/";
 
         let currentWs =
             localStorage.getItem("proxy-ws") ||
@@ -330,17 +405,26 @@
 
         navigator.serviceWorker.register("/sail/sw.js");
 
-        const connection = new BareMux.BareMuxConnection("/sail/baremux/worker.js");
+        const connection =
+            new BareMux.BareMuxConnection(
+                "/sail/baremux/worker.js"
+            );
 
         async function applyTransport() {
-            await connection.setTransport("/sail/libcurl/index.mjs", [
-                { websocket: currentWs }
-            ]);
+            await connection.setTransport(
+                "/sail/libcurl/index.mjs",
+                [
+                    {
+                        websocket: currentWs
+                    }
+                ]
+            );
         }
 
         applyTransport();
 
-        const { ScramjetController } = $scramjetLoadController();
+        const { ScramjetController } =
+            $scramjetLoadController();
 
         const scramjet = new ScramjetController({
             files: {
@@ -353,13 +437,30 @@
 
         scramjet.init();
 
+        function updateCustomWsVisibility() {
+            if (wsSelect.value === "custom") {
+                customWsGroup.style.display = "block";
+            } else {
+                customWsGroup.style.display = "none";
+            }
+        }
+
+        wsSelect.addEventListener(
+            "change",
+            updateCustomWsVisibility
+        );
+
         function toggleSettings() {
-            document.getElementById("settings-panel").classList.toggle("open");
+            document
+                .getElementById("settings-panel")
+                .classList
+                .toggle("open");
         }
 
         function saveSettings() {
-            const selected = document.getElementById("ws-select").value;
-            const custom = document.getElementById("custom-ws").value.trim();
+            const selected = wsSelect.value;
+            const custom =
+                customWsInput.value.trim();
 
             if (selected === "default") {
                 currentWs = defaultWs;
@@ -370,7 +471,10 @@
                 currentWs = selected;
             }
 
-            localStorage.setItem("proxy-ws", currentWs);
+            localStorage.setItem(
+                "proxy-ws",
+                currentWs
+            );
 
             applyTransport();
 
@@ -378,11 +482,15 @@
         }
 
         function getNewTabPage() {
-            return scramjet.encodeUrl("https://math-hub.pages.dev/newtab/");
+            return scramjet.encodeUrl(
+                "https://math-hub.pages.dev/newtab/"
+            );
         }
 
         function addTab(url = "internal:newtab") {
-            const id = "tab-" + crypto.randomUUID();
+
+            const id =
+                "tab-" + crypto.randomUUID();
 
             const tabObj = {
                 id,
@@ -392,61 +500,96 @@
 
             tabs.push(tabObj);
 
-            const tabEl = document.createElement("div");
+            const tabEl =
+                document.createElement("div");
 
             tabEl.className = "tab";
             tabEl.id = "btn-" + id;
 
             tabEl.innerHTML = `
-                <span class="tab-title">New Tab</span>
-                <span class="tab-close">×</span>
+                <span class="tab-title">
+                    New Tab
+                </span>
+
+                <span class="tab-close">
+                    ×
+                </span>
             `;
 
             tabEl.onclick = () => switchTab(id);
 
-            tabEl.querySelector(".tab-close").onclick = (e) => {
-                closeTab(e, id);
-            };
+            tabEl
+                .querySelector(".tab-close")
+                .onclick = (e) => {
+                    closeTab(e, id);
+                };
 
             tabBar.insertBefore(
                 tabEl,
                 document.querySelector(".spacer")
             );
 
-            const iframe = document.createElement("iframe");
+            const iframe =
+                document.createElement("iframe");
 
             iframe.id = "frame-" + id;
 
             if (url === "internal:newtab") {
                 iframe.src = getNewTabPage();
             } else {
-                iframe.src = scramjet.encodeUrl(formatUrl(url));
+                iframe.src =
+                    scramjet.encodeUrl(
+                        formatUrl(url)
+                    );
             }
 
-            iframe.addEventListener("load", () => {
-                updateTabTitle(id);
-            });
+            iframe.addEventListener(
+                "load",
+                () => {
+                    updateTabTitle(id);
+                }
+            );
 
-            viewportContainer.appendChild(iframe);
+            viewportContainer.appendChild(
+                iframe
+            );
 
             switchTab(id);
         }
 
         function switchTab(id) {
+
             activeTabId = id;
 
             tabs.forEach(tab => {
-                const btn = document.getElementById("btn-" + tab.id);
-                const frame = document.getElementById("frame-" + tab.id);
 
-                const active = tab.id === id;
+                const btn =
+                    document.getElementById(
+                        "btn-" + tab.id
+                    );
 
-                btn.classList.toggle("active", active);
-                frame.classList.toggle("active", active);
+                const frame =
+                    document.getElementById(
+                        "frame-" + tab.id
+                    );
+
+                const active =
+                    tab.id === id;
+
+                btn.classList.toggle(
+                    "active",
+                    active
+                );
+
+                frame.classList.toggle(
+                    "active",
+                    active
+                );
 
                 if (active) {
                     bar.value =
-                        tab.url === "internal:newtab"
+                        tab.url ===
+                            "internal:newtab"
                             ? ""
                             : tab.url;
                 }
@@ -454,19 +597,31 @@
         }
 
         function closeTab(event, id) {
+
             event.stopPropagation();
 
             if (tabs.length === 1) return;
 
-            const index = tabs.findIndex(t => t.id === id);
+            const index =
+                tabs.findIndex(
+                    t => t.id === id
+                );
 
-            document.getElementById("btn-" + id)?.remove();
-            document.getElementById("frame-" + id)?.remove();
+            document
+                .getElementById("btn-" + id)
+                ?.remove();
+
+            document
+                .getElementById("frame-" + id)
+                ?.remove();
 
             tabs.splice(index, 1);
 
             if (activeTabId === id) {
-                const next = tabs[index] || tabs[index - 1];
+
+                const next =
+                    tabs[index] ||
+                    tabs[index - 1];
 
                 if (next) {
                     switchTab(next.id);
@@ -475,62 +630,103 @@
         }
 
         function formatUrl(url) {
+
             if (!url) return "";
 
             if (
                 !url.startsWith("http://") &&
                 !url.startsWith("https://")
             ) {
+
                 if (url.includes(".")) {
                     return "https://" + url;
                 }
 
-                return "https://search.brave.com/search?q=" +
-                    encodeURIComponent(url);
+                return (
+                    "https://duckduckgo.com/?q=" +
+                    encodeURIComponent(url)
+                );
             }
 
             return url;
         }
 
         function nav() {
+
             if (!activeTabId) return;
 
-            const value = bar.value.trim();
+            const value =
+                bar.value.trim();
 
             if (!value) return;
 
-            const formatted = formatUrl(value);
+            const formatted =
+                formatUrl(value);
 
-            const tab = tabs.find(t => t.id === activeTabId);
+            const tab =
+                tabs.find(
+                    t => t.id === activeTabId
+                );
 
             tab.url = formatted;
 
             const frame =
-                document.getElementById("frame-" + activeTabId);
+                document.getElementById(
+                    "frame-" + activeTabId
+                );
 
-            frame.src = scramjet.encodeUrl(formatted);
+            frame.src =
+                scramjet.encodeUrl(
+                    formatted
+                );
 
-            updateTabTitle(activeTabId, formatted);
+            updateTabTitle(
+                activeTabId,
+                formatted
+            );
         }
 
-        function updateTabTitle(id, fallback = "Loading...") {
-            const frame = document.getElementById("frame-" + id);
+        function updateTabTitle(
+            id,
+            fallback = "Loading..."
+        ) {
+
+            const frame =
+                document.getElementById(
+                    "frame-" + id
+                );
 
             let title = fallback;
 
             try {
+
                 title =
-                    frame.contentDocument?.title ||
-                    new URL(tabs.find(t => t.id === id)?.url || "")
-                        .hostname ||
+                    frame.contentDocument
+                        ?.title ||
+
+                    new URL(
+                        tabs.find(
+                            t => t.id === id
+                        )?.url || ""
+                    ).hostname ||
+
                     fallback;
+
             } catch {
+
                 try {
-                    title = new URL(
-                        tabs.find(t => t.id === id)?.url || ""
-                    ).hostname;
+
+                    title =
+                        new URL(
+                            tabs.find(
+                                t => t.id === id
+                            )?.url || ""
+                        ).hostname;
+
                 } catch {
+
                     title = fallback;
+
                 }
             }
 
@@ -540,38 +736,61 @@
         }
 
         function goBack() {
+
             if (!activeTabId) return;
 
             document
-                .getElementById("frame-" + activeTabId)
+                .getElementById(
+                    "frame-" + activeTabId
+                )
                 ?.contentWindow
                 ?.history
                 ?.back();
         }
 
         function goForward() {
+
             if (!activeTabId) return;
 
             document
-                .getElementById("frame-" + activeTabId)
+                .getElementById(
+                    "frame-" + activeTabId
+                )
                 ?.contentWindow
                 ?.history
                 ?.forward();
         }
 
-        bar.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") {
-                nav();
+        bar.addEventListener(
+            "keydown",
+            (e) => {
+
+                if (e.key === "Enter") {
+                    nav();
+                }
             }
-        });
+        );
 
-        window.addEventListener("load", () => {
-            const params = new URLSearchParams(location.search);
+        window.addEventListener(
+            "load",
+            () => {
 
-            const go = params.get("go");
+                updateCustomWsVisibility();
 
-            addTab(go || "internal:newtab");
-        });
+                const params =
+                    new URLSearchParams(
+                        location.search
+                    );
+
+                const go =
+                    params.get("go");
+
+                addTab(
+                    go ||
+                    "internal:newtab"
+                );
+            }
+        );
     </script>
 
 </body>
